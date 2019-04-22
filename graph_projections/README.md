@@ -31,7 +31,7 @@ Note: the youtube dataset needs this line inserted after the first one: "% 29336
 
 ## Compiling Graph Projections
 
-There are 2 variants:
+There are 2 variants of the algorithm:
 
 - Bit Flag (gp_bit_flag): a projection with a binary edge
 - Counter (gp_count): a projection that counts how many times the relation was seen
@@ -44,7 +44,7 @@ Each variant contains three directories:
 
         g++ -O3 -std=c++11 main.cpp -o main
         
-or 
+  or 
 
         DEC++ -m n main.cpp
 
