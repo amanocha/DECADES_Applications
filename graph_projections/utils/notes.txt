@@ -1,0 +1,13 @@
+# First add random weights
+
+bash 
+
+# one-liner to create second graph
+
+
+
+awk ' NR==1 {$0; print; next} NR==2 {t = $3; $3 = $4; $4=t; print; next} { t = $1; $1 = $2; $2 = t; print; } ' ../revolution/out.brunson_revolution_revolution | sort -k1n -k2n
+
+awk ' NR < 3 {$0; print; next;} { $3 = rand(); print; }' ../revolution/out.brunson_revolution_revolution
+
+
