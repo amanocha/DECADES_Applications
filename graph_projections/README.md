@@ -33,46 +33,44 @@ Note: the youtube dataset needs this line inserted after the first one: "% 29336
 
 There are 2 variants:
 
-Bit Flag (gp_bit_flag): a projection with a binary edge
-
-Counter (gp_count): a projection that counts how many times the relation was seen
-
------
-
-Each variant contains a "baseline" directory. This is just a standard
-version of the algorithm that can be compiled with g++.
-
-$ g++ -O3 -std=c++11 main.cpp -o main
-
-Each variant contains a "decades" directory. This is a standard
-version of the algorithm that can be compiled with DEC++. Inlined and
-decoupled variants should be correct.
-
-Two variants (gp_bit*) contain experimental decades bit serial
-operations. They can be compiled with DEC++ but decoupling is
-not valid (only inlined)
-
-To compile a DEC++ version, just do:
-
-$ DEC++ main.cpp
+- Bit Flag (gp_bit_flag): a projection with a binary edge
+- Counter (gp_count): a projection that counts how many times the relation was seen
 
 -----
 
-To get inputs read the README in inputs
+Each variant contains three directories:
+
+- baseline: a standard version of the algorithm that can be compiled with g++ or DEC++ "n" (native) mode
+
+        g++ -O3 -std=c++11 main.cpp -o main
+        
+or 
+
+        DEC++ -m n main.cpp
+
+- decades: a multithreaded parallel version of the algorithm that can be compiled with DEC++ "db" (decades base) or "di" decades decoupled implicity) modes and a set number of threads
+
+        DEC++ -m [mode] -t [num_threads] main.cpp 
+
+- decades_bit_serial: a SIMD parallel version of the algorithm that can be compiled with DEC++ "b" (biscuit) mode
+
+        DEC++ -m b -s [sync mode] -sps [scratchpad size] main.cpp
 
 -----
 
-the pp_kernel is not a graph projection, but a preprocessing step that
-might occur after a graph projection has occurred. It is an
-elementwise MAX followed by a division and tanh activation.
+To run the executables:
 
------
+- If you compiled with g++, you need to input two graphs because the baseline version does bi-direction projection. Run the following:
 
-To run in decades:
+        ./exec <PATH_TO_INPUTS>/x_to_y_graph.txt <PATH_TO_INPUTS>/y_to_x_graph.txt
+        
+- If you compiled with DEC++, you only need to input one graph, depending on which direction of projection you want. Run one of the following:
 
-./exec <PATH_TO_INPUTS>/x_to_y_graph.txt
+        ./decades_exec <PATH_TO_INPUTS>/x_to_y_graph.txt
+        
+or
+        
+        ./decades_exec <PATH_TO_INPUTS>/y_to_x_graph.txt
 
-Baselines do bi-direction projection so you need to graphs (probably
-don't need to worry about this)
 
-./exec <PATH_TO_INPUTS>/x_to_y_graph.txt <PATH_TO_INPUTS>/y_to_x_graph.txt
+
