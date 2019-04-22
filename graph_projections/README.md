@@ -29,7 +29,7 @@
 
 Note: the youtube dataset needs this line inserted after the first one: "% 293360 94238 30087" (number of edges, x_nodes, and y_nodes)
 
-## Running Graph Projections
+## Compiling Graph Projections
 
 There are 2 variants:
 
@@ -56,7 +56,7 @@ or
 
         DEC++ -m b -s [sync mode] -sps [scratchpad size] main.cpp
 
------
+## Running Graph Projections
 
 To run the executables:
 
@@ -68,7 +68,7 @@ To run the executables:
 
         ./decades_exec <PATH_TO_INPUTS>/x_to_y_graph.txt
         
-or
+  or
         
         ./decades_exec <PATH_TO_INPUTS>/y_to_x_graph.txt
 
