@@ -48,9 +48,9 @@ Each variant contains three directories:
 
         DEC++ -m n main.cpp
 
-- decades: a multithreaded parallel version of the algorithm that can be compiled with DEC++ "db" (decades base) or "di" decades decoupled implicity) modes and a set number of threads
+- decades: a multithreaded parallel version of the algorithm that can be compiled with DEC++ "db" (decades base) mode and a set number of threads
 
-        DEC++ -m [mode] -t [num_threads] main.cpp 
+        DEC++ -m db -t [num_threads] main.cpp 
 
 - decades_bit_serial: a SIMD parallel version of the algorithm that can be compiled with DEC++ "b" (biscuit) mode
 
