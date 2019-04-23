@@ -36,6 +36,8 @@ There are 2 variants of the algorithm:
 - Bit Flag (gp_bit_flag): a projection with a binary edge
 - Counter (gp_count): a projection that counts how many times the relation was seen
 
+For more information on the algorithm, see https://en.wikipedia.org/wiki/Bipartite_network_projection.
+
 -----
 
 Each variant contains three directories:
@@ -72,5 +74,90 @@ To run the executables:
         
         ./decades_exec <PATH_TO_INPUTS>/y_to_x_graph.txt
 
+## Interpreting The Results
 
+If you compiled with "n" (native) or "db" (decades base) mode, then you will see output similar to the following (the graph information will be different depending on which dataset you decide to use):
 
+        graph: ../../data/youtube-groupmemberships/y_to_x_graph.txt
+        edges: 293360
+        x_graph_nodes: 30087
+        y_graph_nodes: 94238
+
+        Running kernel
+        Elapsed time: 3.65026s
+        Finished hash: 66399082.000
+        
+This output highlights how many nodes are in each of the graph partitions (x and y), how long the kernel takes to run, and the hash (used to verify that the program is running correctly). Note: you should see the same hash for different DEC++ variants if they are run on the same input (i.e. Youtube y-to-x projection).
+
+-----
+
+If you compiled with "di" (decades decoupled implicit) mode, then you will see output similar to the following (with dataset differences in mind):
+
+        graph: ../../data/youtube-groupmemberships/y_to_x_graph.txt
+        edges: 293360
+        x_graph_nodes: 30087
+        y_graph_nodes: 94238
+        
+        Running kernel
+        Elapsed time: 119.813s
+        finished hash: 66399082.000
+        
+        
+        -----
+        decoupled runtime information:
+        -----
+        total predicate swaps: 0
+        
+        -----
+        total stores: 66399082
+          stores i32    : 66399082
+          stores i64    : 0
+          stores ptr    : 0
+          stores float  : 0
+          stores double : 0
+
+        -----
+        total loads: 133121616
+          loads i32    : 133121613
+          loads i64    : 1
+          loads ptr    : 2
+          loads float  : 0
+          loads double : 0
+        
+        -----
+        total opt. loads: 66399082 (33.28%)
+          opt. loads i32    : 66399082 (33.28%)
+          opt. loads i64    : 0 (0.00%)
+          opt. loads ptr    : 0 (0.00%)
+          opt. loads float  : 0 (0.00%)
+          opt. loads double : 0 (0.00%)
+
+You will see the same graph outputs from before, but you will also see decoupling information, including how many stores, loads, and optimized loads (terminal loads) took place, and the data types that these memory accesses operated on.
+
+-----
+
+If you compiled with "b" (biscuit) mode, then you will see output similar to the following (with dataset differences in mind):
+
+        graph: ../../data/youtube-groupmemberships/y_to_x_graph.txt
+        edges: 293360
+        x_graph_nodes: 30087
+        y_graph_nodes: 94238
+
+        Running kernel
+        Elapsed time: 4.23129s
+        Finished hash: 66399082.000
+        
+        ------
+        Bit Serial Stats:
+        -
+        Total # of items sent to bit serial: 66399082
+        Sent in N batches: 81625
+        Average size of batch: 813.47
+        Max size of batch: 1024
+        Min size of batch: 1
+        Total amount of time compute spends waiting: 3.46
+        Average amount of time compute spends waiting: 0.037
+        Total amount of time spent on memcpy: 0.04
+        ------
+
+You will see the same graph outputs from before, but you will also see biscuit information, include how many computations were sent to the bit-serial processor, how many batches of computation were sent, the average size of these batches, and the smallest and largest batch sizes. You will also see the total and average amount of time that the computation kernel spends waiting for bit-serial batch computation, as well as the total amount of time that biscuit spends transferring data from the computation kernel to its scratchpad.
