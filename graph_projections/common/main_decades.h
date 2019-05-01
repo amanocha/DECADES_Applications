@@ -8,6 +8,7 @@ int main(int argc, char** argv) {
   x_to_y_fname = argv[1];
   x_to_y_bgraph = parse_bgraph(x_to_y_fname);
   y_project = (weight_type*) calloc(get_projection_size(x_to_y_bgraph), sizeof(weight_type));
+  //std::cout << sizeof(weight_type)*get_projection_size(x_to_y_bgraph) << std::endl;
   assert(y_project);
   
   preprocess(x_to_y_bgraph, y_project);
@@ -31,5 +32,5 @@ int main(int argc, char** argv) {
   clean_bgraph(x_to_y_bgraph);
   free(y_project);
 
-  return 1;
+  return 0;
 }

@@ -1,1 +1,4 @@
 graph_projections/data/
+graph_projections/utils/shuffle.awk
+vertex_nomination/data/
+vertext_nomination/snap.pyc
