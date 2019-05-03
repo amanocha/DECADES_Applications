@@ -7,5 +7,3 @@ This repository contains examples and DECADES applications to run and experiment
 3. A graph algorithm written in Python, "vertex nomination" to demonstrate the capabilities of Numba and how it fits into the DEC++ framework.
 
 To find out more about each example, navigate to their respective directories.
-
-test
